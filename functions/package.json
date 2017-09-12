@@ -1,0 +1,17 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint --fix \"**/*.js\"",
+    "test": "npm run lint",
+    "start": "firebase serve --only functions",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+  	"actions-on-google": "^1.0.0",
+    "firebase-admin": "~5.2.1",
+    "firebase-functions": "^0.6.3",
+    "deep-freeze": "0.0.1"
+  }
+}
