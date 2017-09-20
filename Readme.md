@@ -4,4 +4,4 @@ Fret is a google actions project that allows you to learn requested chords using
 
 You can run this project for yourself by importing the fret.zip file into api.ai. You see a demo of the project for yourself on youtube, here:
 
-[![Fret](https://imgur.com/a/3Pw3l)](https://www.youtube.com/watch?v=VNmmH3kAXgg)
+[![Fret](https://i.imgur.com/jwrXzm5.png)](https://www.youtube.com/watch?v=VNmmH3kAXgg)
