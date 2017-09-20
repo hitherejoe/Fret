@@ -16,7 +16,16 @@ const learnChord = app => {
   const chord = chords[input]
   
   if (chord != undefined) {
- 	return app.ask(buildString(chord) + ". " + strings.general.whatNext)
+  	if (app.hasSurfaceCapability(app.SurfaceCapabilities.SCREEN_OUTPUT)) {
+		console.log(`HAS SURFACE CAPABILITY`);
+		app.ask(app.buildRichResponse()
+			.addSimpleResponse('The ' + chord + ' chord. ' + strings.general.whatNext)
+			.addBasicCard(app.buildBasicCard(buildString(chord))
+			  .setTitle('The ' + chord + ' chord')
+			  .setImage('https://example.google.com/42.png', 'The ' + chord + ' chord')));
+  	} else {
+ 		return app.ask(buildString(chord) + ". " + strings.general.whatNext)
+ 	}
   }
   return app.tell(strings.error.chordNotFound)
 };
