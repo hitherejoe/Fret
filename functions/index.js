@@ -17,12 +17,11 @@ const learnChord = app => {
   
   if (chord != undefined) {
   	if (app.hasSurfaceCapability(app.SurfaceCapabilities.SCREEN_OUTPUT)) {
-		console.log(`HAS SURFACE CAPABILITY`);
 		return app.ask(app.buildRichResponse()
 			.addSimpleResponse('The ' + input + ' chord can be played like this. ' + strings.general.whatNext)
 			.addBasicCard(app.buildBasicCard(buildString(chord))
 			  .setTitle('The ' + input + ' chord')
-			  .setImage('https://github.com/hitherejoe/Fret/blob/master/functions/images/c.png?raw=true', 'The ' + input + ' chord')));
+			  .setImage('https://github.com/hitherejoe/Fret/blob/master/functions/images/' + input + '.png?raw=true', 'The ' + input + ' chord')));
   	} else {
  		return app.ask(buildString(chord) + ". " + strings.general.whatNext)
  	}
