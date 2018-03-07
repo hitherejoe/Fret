@@ -20,13 +20,11 @@ const CHORD_ARGUMENT = 'chord';
 
 const learnChord = app => {
   const chords = strings.chords;
-  console.log(`chords ` + chords);
   const input = app.getArgument(CHORD_ARGUMENT)
   const chord = chords[input]
   
   if (chord != undefined) {
   	if (app.hasSurfaceCapability(app.SurfaceCapabilities.SCREEN_OUTPUT)) {
-  		console.log(`locales ` + app.getUserLocale());
 		return app.ask(app.buildRichResponse()
 			.addSimpleResponse(format(i18n.__('CHORD_DESC'), input, i18n.__('WHAT_NEXT')))
 			.addBasicCard(app.buildBasicCard(buildString(chord))
@@ -67,7 +65,7 @@ const actionMap = new Map();
 actionMap.set(Actions.LEARN_CHORD, learnChord);
 
 const fret = functions.https.onRequest((request, response) => {
-  const app = new DialogflowApp({ request, response });
+  const app = new ApiAiApp({ request, response });
   i18n.setLocale(app.getUserLocale());
   app.handleRequest(actionMap);
 });
