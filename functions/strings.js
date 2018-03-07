@@ -8,12 +8,12 @@ const chords = {
   };
 
 const guitarStrings = [
-  "E-string",
-  "A-string",
-  "D-string",
-  "G-string",
-  "B-string",
-  "E-string"
+  "E",
+  "A",
+  "D",
+  "G",
+  "B",
+  "E"
 ];
 
 module.exports = {

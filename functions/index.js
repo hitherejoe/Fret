@@ -26,6 +26,7 @@ const learnChord = app => {
   
   if (chord != undefined) {
   	if (app.hasSurfaceCapability(app.SurfaceCapabilities.SCREEN_OUTPUT)) {
+  		console.log(`locales ` + app.getUserLocale());
 		return app.ask(app.buildRichResponse()
 			.addSimpleResponse(format(i18n.__('CHORD_DESC'), input, i18n.__('WHAT_NEXT')))
 			.addBasicCard(app.buildBasicCard(buildString(chord))
@@ -66,11 +67,7 @@ const actionMap = new Map();
 actionMap.set(Actions.LEARN_CHORD, learnChord);
 
 const fret = functions.https.onRequest((request, response) => {
-  console.log(`Request headers: ${JSON.stringify(request.headers)}`);
-  console.log(`Request body: ${JSON.stringify(request.body)}`);
-  const i18n = require('i18n');
-  const app = new ApiAiApp({ request, response });
-  console.log(`chordLOCAELLELEs ` + app.getUserLocale());
+  const app = new DialogflowApp({ request, response });
   i18n.setLocale(app.getUserLocale());
   app.handleRequest(actionMap);
 });
