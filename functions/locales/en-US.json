@@ -1,0 +1,12 @@
+{
+  "STRING_MUTED": "muted",
+  "STRING_OPEN": "open",
+  "STRING_FRET": "fret",
+  "CHORD_PATTERN": " can be played with ",
+  "WHAT_NEXT": "What would you like to do now?",
+  "ERROR_NOT_FOUND": "Oops, I couldn't find that chord. Please try again!",
+  "ERROR_NO_REPEAT": "Oops, there's nothing to repeat!",
+
+  "CHORD_TITLE": "The {0} chord",
+  "CHORD_DESC": "The {0} chord can be played like this. {1}"
+}

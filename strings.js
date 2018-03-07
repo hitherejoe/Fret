@@ -15,8 +15,3 @@ const guitarStrings = [
   "B-string",
   "E-string"
 ];
-
-module.exports = {
-  chords,
-  guitarStrings
-};

@@ -3,6 +3,14 @@
 const { ApiAiApp } = require('actions-on-google');
 const functions = require('firebase-functions');
 const strings = require('./strings');
+const i18n = require('i18n');
+const format = require('string-format');
+
+i18n.configure({
+  locales: ['en-US', 'it-IT'],
+  directory: __dirname + '/locales',
+  defaultLocale: 'en-US'
+});
 
 const Actions = {
   LEARN_CHORD: 'learn.chord',
@@ -12,21 +20,22 @@ const CHORD_ARGUMENT = 'chord';
 
 const learnChord = app => {
   const chords = strings.chords;
+  console.log(`chords ` + chords);
   const input = app.getArgument(CHORD_ARGUMENT)
   const chord = chords[input]
   
   if (chord != undefined) {
   	if (app.hasSurfaceCapability(app.SurfaceCapabilities.SCREEN_OUTPUT)) {
 		return app.ask(app.buildRichResponse()
-			.addSimpleResponse('The ' + input + ' chord can be played like this. ' + strings.general.whatNext)
+			.addSimpleResponse(format(i18n.__('CHORD_DESC'), input, i18n.__('WHAT_NEXT')))
 			.addBasicCard(app.buildBasicCard(buildString(chord))
-			  .setTitle('The ' + input + ' chord')
+			  .setTitle(format(i18n.__('CHORD_TITLE'), input))
 			  .setImage('https://github.com/hitherejoe/Fret/blob/master/functions/images/' + input + '.png?raw=true', 'The ' + input + ' chord')));
   	} else {
- 		return app.ask(buildString(chord) + ". " + strings.general.whatNext)
+ 		return app.ask(buildString(chord) + ". " + i18n.__('WHAT_NEXT'))
  	}
   }
-  return app.tell(strings.error.chordNotFound)
+  return app.tell(i18n.__('ERROR_NOT_FOUND'))
 };
 
 function buildString(sequence) {
@@ -45,11 +54,11 @@ function buildString(sequence) {
 function buildNote(note) {
 	const notes = strings.notes;
 	if (note == 'X') {
-		return notes.mutedString
+		return i18n.__('STRING_MUTED')
 	} else if (note == '0') {
-		return notes.openString
+		return i18n.__('STRING_OPEN')
 	} else {
-		return notes.frettedString
+		return i18n.__('STRING_FRET')
 	}
 }
 
@@ -59,9 +68,13 @@ actionMap.set(Actions.LEARN_CHORD, learnChord);
 const fret = functions.https.onRequest((request, response) => {
   console.log(`Request headers: ${JSON.stringify(request.headers)}`);
   console.log(`Request body: ${JSON.stringify(request.body)}`);
+  const i18n = require('i18n');
   const app = new ApiAiApp({ request, response });
+  console.log(`chordLOCAELLELEs ` + app.getUserLocale());
+  i18n.setLocale(app.getUserLocale());
   app.handleRequest(actionMap);
 });
+
 
 module.exports = {
   fret

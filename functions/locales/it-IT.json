@@ -1,0 +1,27 @@
+{
+  "STRING_MUTED": "Smorzata",
+  "STRING_OPEN": "Aperta",
+  "STRING_FRET": "Tasto",
+  "CHORD_PATTERN": " può essere suonata con ",
+  "WHAT_NEXT": "Cosa ora vi piacerebbe fare",
+  "ERROR_NOT_FOUND": "Scusi! Non ho potuto trovare quella corda. Per placere riprova",
+  "ERROR_NO_REPEAT": "Scusi! Non ce nulla di ripetere",
+
+  "CHORD_TITLE": "La corda {0}",
+  "CHORD_DESC": "La corda può essere suonata cosi {1}"
+}
+
+
+Benvenuto al precettore della Chitarra Fret! Che cosa vi piacerebbe fare oggi?
+
+Dimmi come si suona una corda
+
+Farmi verdere una corda
+
+Dimmi una corda
+
+Mi può dire come si suona un altra corda
+
+Voglio imparare a suonare una corda
+
+Quale corda vi piacerrebe sapere a suonore
