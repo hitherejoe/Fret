@@ -1,7 +1,11 @@
 'use strict';
 
-const { ApiAiApp } = require('actions-on-google');
+const { 
+	BasicCard,
+SimpleResponse,
+	dialogflow } = require('actions-on-google');
 const functions = require('firebase-functions');
+const app = dialogflow({debug: true});
 const strings = require('./strings');
 const i18n = require('i18n');
 const format = require('string-format');
@@ -16,8 +20,14 @@ const Actions = {
   LEARN_CHORD: 'learn.chord',
 };
 
+
 const CHORD_ARGUMENT = 'chord';
 
+app.intent('', (conv, {input}) => {
+	const chords = strings.chords;
+	const chord = chords[input]
+})
+/*
 const learnChord = app => {
   const chords = strings.chords;
   const input = app.getArgument(CHORD_ARGUMENT)
@@ -25,18 +35,24 @@ const learnChord = app => {
   
   if (chord != undefined) {
   	if (app.hasSurfaceCapability(app.SurfaceCapabilities.SCREEN_OUTPUT)) {
-		return app.ask(app.buildRichResponse()
+  		conv.ask(app.buildRichResponse()
 			.addSimpleResponse(format(i18n.__('CHORD_DESC'), input, i18n.__('WHAT_NEXT')))
 			.addBasicCard(app.buildBasicCard(buildString(chord))
 			  .setTitle(format(i18n.__('CHORD_TITLE'), input))
 			  .setImage('https://github.com/hitherejoe/Fret/blob/master/functions/images/' + input + '.png?raw=true', 'The ' + input + ' chord')));
   	} else {
- 		return app.ask(buildString(chord) + ". " + i18n.__('WHAT_NEXT'))
- 	}
-  }
-  return app.tell(i18n.__('ERROR_NOT_FOUND'))
-};
+ 		//return app.ask(buildString(chord) + ". " + i18n.__('WHAT_NEXT'))
 
+ 		conv.ask(new SimpleResponse({
+  			speech: buildString(chord) + ". " + i18n.__('WHAT_NEXT'),
+  			text: buildString(chord) + ". " + i18n.__('WHAT_NEXT'),
+			}));
+ 	}
+  } else {
+  	conv.close(i18n.__('ERROR_NOT_FOUND'))
+  }
+};
+*/
 function buildString(sequence) {
 	var chordSequence = "";
 	const guitarStrings = strings.guitarStrings;
@@ -61,16 +77,40 @@ function buildNote(note) {
 	}
 }
 
-const actionMap = new Map();
-actionMap.set(Actions.LEARN_CHORD, learnChord);
+//const actionMap = new Map();
+//actionMap.set(Actions.LEARN_CHORD, learnChord);
 
-const fret = functions.https.onRequest((request, response) => {
-  const app = new ApiAiApp({ request, response });
-  i18n.setLocale(app.getUserLocale());
-  app.handleRequest(actionMap);
+app.intent('learn.chord', (conv, {chord}) => {
+    const chords = strings.chords;
+ // const input = app.getArgument(CHORD_ARGUMENT)
+  const input = chords[chord]
+console.log(input);
+  console.log(chord);
+  
+  if (chord != undefined) {
+  	if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
+		conv.ask(new BasicCard({
+		  text: format(i18n.__('CHORD_DESC'), chord, i18n.__('WHAT_NEXT')), // Note the two spaces before '\n' required for
+		                               // a line break to be rendered in the card.
+		  title: format(i18n.__('CHORD_TITLE'), chord),
+		
+		  image: new Image({
+		    url: 'https://github.com/hitherejoe/Fret/blob/master/functions/images/' + chord + '.png?raw=true', ,
+		    alt: 'The ' + chord + ' chord',
+		  }),
+		}));
+
+
+  	} else {
+  		conv.ask(new SimpleResponse({
+		  speech: buildString(input) + ". " + i18n.__('WHAT_NEXT'),
+		  text: buildString(input) + ". " + i18n.__('WHAT_NEXT'),
+		}));
+ 	}
+  } else {
+  	conv.close(i18n.__('ERROR_NOT_FOUND'))
+  }
 });
 
 
-module.exports = {
-  fret
-};
+exports.fret = functions.https.onRequest(app);

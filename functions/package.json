@@ -9,10 +9,10 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
-    "actions-on-google": "^1.0.0",
+    "actions-on-google": "^2.0.0",
     "deep-freeze": "0.0.1",
     "firebase-admin": "~5.2.1",
-    "firebase-functions": "^0.6.3",
+    "firebase-functions": "^1.0.2",
     "i18n": "^0.8.3",
     "string-format": "^0.5.0"
   }
